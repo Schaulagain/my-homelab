@@ -1,0 +1,44 @@
+# Homelab services. Copy .env.example to .env, fill it in, then:
+#   docker compose up -d
+# Each service keeps its data in ./data/<service> (git-ignored), so the
+# whole lab can be rebuilt from this file plus that folder.
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"     # web admin: http://<server>:8080/admin
+    environment:
+      TZ: ${TZ}
+      FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD}
+      FTLCONF_dns_listeningMode: all   # answer queries from the LAN and Tailscale, not just the Docker network
+    volumes:
+      - ./data/pihole:/etc/pihole
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    user: ${PUID}:${PGID}
+    ports:
+      - "8096:8096"       # web UI: http://<server>:8096
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ./data/jellyfin/config:/config
+      - ./data/jellyfin/cache:/cache
+      - ${MEDIA_PATH}:/media:ro
+
+  portainer:
+    image: portainer/portainer-ce:lts
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "9443:9443"       # web UI: https://<server>:9443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data
