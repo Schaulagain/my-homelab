@@ -23,7 +23,7 @@ flowchart LR
 | [Tailscale](https://tailscale.com) | Private VPN for remote access, with no router ports opened | runs on the host |
 
 ## Hardware
-* **Server:** Toshiba Equium L40 (Pentium Dual, 3GB RAM, 250GB HDD)
+* **Server:** Old Acer laptop
 * **OS:** Ubuntu Server 24.04 LTS, headless, managed over SSH
 
 ## Quick start

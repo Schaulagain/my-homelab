@@ -1,6 +1,6 @@
 # Project 1: Initial Server Setup & Docker Install
 
-**Goal:** To install Ubuntu Server 24.04 on my Toshiba laptop and run the first NGINX container.
+**Goal:** To install Ubuntu Server 24.04 on my old Acer laptop and run the first NGINX container.
 
 **Steps:**
 1.  Flashed Ubuntu Server 24.04 LTS to a USB stick using BalenaEtcher.
