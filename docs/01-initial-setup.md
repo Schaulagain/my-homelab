@@ -1,18 +1,14 @@
-# Project 1: Initial Server Setup & Docker Install
+# Installing Ubuntu Server and Docker
 
-**Goal:** To install Ubuntu Server 24.04 on my old Acer laptop and run the first NGINX container.
+The plan was to get Ubuntu Server 24.04 onto the old laptop and run one container on it.
 
-**Steps:**
-1.  Flashed Ubuntu Server 24.04 LTS to a USB stick using BalenaEtcher.
-2.  Installed the OS, ensuring to select "Install OpenSSH server" and "Docker" during setup.
-3.  Connected via SSH from my main laptop.
-4.  Ran `docker run --name my-first-container -p 8080:80 -d nginx`.
+1. Wrote the Ubuntu Server 24.04 LTS image to a USB stick with balenaEtcher.
+2. Installed it. The installer asks whether to add OpenSSH server and Docker, and you want both.
+3. Logged in over SSH from my main laptop.
+4. Started a test container: `docker run --name my-first-container -p 8080:80 -d nginx`
 
-**Problems & Solutions:**
-* **Problem:** After installation, I couldn't connect via SSH. The connection was refused.
-* **Diagnosis:** I had to connect a monitor and keyboard to the laptop to check the service status with `systemctl status ssh`.
-* **Solution:** I realized I had missed the OpenSSH server installation step. I ran `sudo apt install openssh-server` to fix it.
+## SSH didn't work at first
 
-**Key Learnings:**
-* Always double-check installation options. A small mistake at the start can cause headaches later.
-* SSH is essential for headless server management.
+After the install, SSH connections were refused. I had to plug a monitor and keyboard back into the laptop to find out why. `systemctl status ssh` showed there was no SSH service at all, because I'd skipped the OpenSSH option in the installer. `sudo apt install openssh-server` fixed it.
+
+Lesson: read the installer screens properly. On a machine without a screen, SSH is the only way in.

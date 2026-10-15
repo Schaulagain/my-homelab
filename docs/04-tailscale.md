@@ -1,22 +1,18 @@
-# Project 4: Remote Access with Tailscale
+# Tailscale
 
-**Goal:** Reach the homelab from anywhere without opening ports on the router.
+I wanted to reach the server from outside the house without forwarding ports on the router.
 
-**Steps:**
-1. Install Tailscale on the server (on the host, not in Docker):
+Tailscale goes on the host, not in Docker:
 
 ```sh
 curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 ```
 
-2. Install the Tailscale app on my laptop and phone and sign in with the same account.
-3. Reach services by the server's Tailscale IP or MagicDNS name, e.g. `http://homelab:8096` for Jellyfin.
+Then install the Tailscale app on the laptop and phone and log in with the same account. The services are reachable at the server's Tailscale IP or its MagicDNS name, e.g. `http://homelab:8096` for Jellyfin.
 
-**Why Tailscale instead of port forwarding:**
-* No ports exposed to the internet, so Pi-hole, Portainer and SSH are never publicly reachable.
-* It works behind CGNAT, which many home ISPs use.
-* Traffic is end-to-end encrypted with WireGuard.
+Why not just forward ports:
 
-**Key Learnings:**
-* VPN basics: mesh networking, NAT traversal, and why a zero-trust overlay network beats opening ports.
+- Nothing is open to the internet, so Pi-hole, Portainer and SSH can't be reached by strangers.
+- Many home ISPs use CGNAT, which makes port forwarding impossible anyway. Tailscale still works behind it.
+- Connections go over WireGuard, so they're encrypted.

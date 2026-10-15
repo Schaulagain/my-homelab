@@ -1,49 +1,45 @@
-# My Homelab Journey 🚀
+# my-homelab
 
-An old laptop turned into a headless Ubuntu server that runs my self-hosted services in Docker. This repository documents how I built it to learn Linux administration, containers and networking hands-on.
+An old Acer laptop running Ubuntu Server 24.04 with no screen attached. It sits at home and runs a few services in Docker. I manage it over SSH. I set it up to get better at Linux, Docker and networking, and these are my notes from doing that.
 
 ```mermaid
 flowchart LR
-    phone["📱 Phone / 💻 Laptop<br/>(anywhere)"] -- Tailscale VPN --> server
-    lan["🏠 Home devices"] -- DNS queries --> pihole
+    phone["Phone / laptop<br/>(anywhere)"] -- Tailscale --> server
+    lan["Devices at home"] -- DNS --> pihole
     subgraph server["Ubuntu Server 24.04 (Docker)"]
-        pihole["Pi-hole<br/>DNS ad blocking"]
-        jellyfin["Jellyfin<br/>media server"]
-        portainer["Portainer<br/>container management"]
+        pihole["Pi-hole"]
+        jellyfin["Jellyfin"]
+        portainer["Portainer"]
     end
 ```
 
-## Services
-
-| Service | What it does | Port |
+| Service | Used for | Port |
 | --- | --- | --- |
-| [Pi-hole](https://pi-hole.net) | Network-wide ad and tracker blocking through DNS | 53 (DNS), 8080 (admin) |
-| [Jellyfin](https://jellyfin.org) | Streams my own movies, shows and music | 8096 |
-| [Portainer](https://www.portainer.io) | Web UI to manage containers, images and logs | 9443 |
-| [Tailscale](https://tailscale.com) | Private VPN for remote access, with no router ports opened | runs on the host |
+| [Pi-hole](https://pi-hole.net) | Blocks ads and trackers for the whole network at the DNS level | 53, admin on 8080 |
+| [Jellyfin](https://jellyfin.org) | Plays my own films, shows and music | 8096 |
+| [Portainer](https://www.portainer.io) | Web UI for containers and logs | 9443 |
+| [Tailscale](https://tailscale.com) | Lets me reach the server from outside without opening router ports | installed on the host |
 
-## Hardware
-* **Server:** Old Acer laptop
-* **OS:** Ubuntu Server 24.04 LTS, headless, managed over SSH
-
-## Quick start
+## Setup
 
 ```sh
 git clone https://github.com/Schaulagain/my-homelab.git && cd my-homelab
-cp .env.example .env   # set passwords, timezone and media path
+cp .env.example .env   # passwords, timezone, path to media
 docker compose up -d
 ```
 
-All service data lives in `./data/` (git-ignored), so the lab can be rebuilt from this repo plus that one folder.
+Everything the containers save goes into `./data/`, which is git-ignored. If the laptop dies, this repo plus a copy of that folder is enough to bring it all back.
 
-## Documentation
-1. [Initial Server Setup & Docker Install](./docs/01-initial-setup.md)
-2. [Network-wide Ad Blocking with Pi-hole](./docs/02-pihole.md)
-3. [Media Server and Container Management](./docs/03-jellyfin-portainer.md)
-4. [Remote Access with Tailscale](./docs/04-tailscale.md)
+## Notes
 
-## Roadmap
-- [ ] Automated backups of `./data/` to an external drive
-- [ ] Uptime monitoring with Uptime Kuma
-- [ ] Reverse proxy with HTTPS for friendly service URLs
-- [ ] Use Pi-hole as the DNS server for the whole tailnet
+1. [Installing Ubuntu Server and Docker](./docs/01-initial-setup.md)
+2. [Pi-hole](./docs/02-pihole.md)
+3. [Jellyfin and Portainer](./docs/03-jellyfin-portainer.md)
+4. [Tailscale](./docs/04-tailscale.md)
+
+## Next
+
+- [ ] Back up `./data/` to an external drive on a schedule
+- [ ] Uptime Kuma for monitoring
+- [ ] A reverse proxy with HTTPS so I don't have to remember port numbers
+- [ ] Use Pi-hole as the DNS server over Tailscale too
