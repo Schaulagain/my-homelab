@@ -43,6 +43,7 @@ Everything the containers save goes into `./data/`, which is git-ignored. If the
 - [ ] Uptime Kuma for monitoring
 - [ ] A reverse proxy with HTTPS so I don't have to remember port numbers
 - [ ] Use Pi-hole as the DNS server over Tailscale too
+- [ ] Run the [water tank controller](https://github.com/Schaulagain/water-tank-controller) server here
 
 ## How this was built
 
