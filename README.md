@@ -43,3 +43,7 @@ Everything the containers save goes into `./data/`, which is git-ignored. If the
 - [ ] Uptime Kuma for monitoring
 - [ ] A reverse proxy with HTTPS so I don't have to remember port numbers
 - [ ] Use Pi-hole as the DNS server over Tailscale too
+
+## How this was built
+
+I set up the server and made the choices about what runs on it. The Compose file and these notes were written mostly by AI coding agents (mainly **Claude**, in Claude Code), with me reviewing and testing.
